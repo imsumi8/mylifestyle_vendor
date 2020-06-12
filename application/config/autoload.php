@@ -133,8 +133,8 @@ $autoload['config'] = array( 'ps_config' );
 |	$autoload['model'] = array('first_model' => 'first');
 */
 
-$autoload['model'] = array( 'User', 'Module', 'Role', 'Image', 'Category','Subcategory', 'Contact', 'ResetCode', 'About', 'Noti', 'Touch', 'Api','Shop','Discount','ProductDiscount','Feed','Product', 'Attribute', 'Attributedetail', 'Collection', 'Productcollection', 'Like', 'Favourite', 'Touch', 'Commentheader', 'Commentdetail', 'Noti', 'Notireaduser', 'Notitoken', 'Transactionheader', 'Transactiondetail', 'Code', 'Transactionstatus', 'Popularcategory', 'Popularproduct', 'Purchasedcategory', 'Purchasedproduct', 'Shop', 'Tag', 'Shoptag', 'Shipping', 'Rate', 'Coupon', 'User_shop', 'Order' , 'Transactioncount', 'Color', 'Specification', 'Delete_history', 'Version', 'Api_key', 'Country', 'City', 'Zone', 'Zone_junction', 'Shipping_zone', 'Language', 'Language_string', 'Backend_config' );
+$autoload['model'] = array( 'User', 'Module','Vendor', 'Role', 'Image', 'Category','Subcategory', 'Contact', 'ResetCode', 'About', 'Noti', 'Touch', 'Api','Shop','Discount','ProductDiscount','Feed','Product', 'Attribute', 'Attributedetail', 'Collection', 'Productcollection', 'Like', 'Favourite', 'Touch', 'Commentheader', 'Commentdetail', 'Noti', 'Notireaduser', 'Notitoken', 'Transactionheader', 'Transactiondetail', 'Code', 'Transactionstatus', 'Popularcategory', 'Popularproduct', 'Purchasedcategory', 'Purchasedproduct', 'Shop', 'Tag', 'Shoptag', 'Shipping', 'Rate', 'Coupon', 'User_shop', 'Order' , 'Transactioncount', 'Color', 'Specification', 'Delete_history', 'Version', 'Api_key', 'Country', 'City', 'Zone', 'Zone_junction', 'Shipping_zone', 'Language', 'Language_string', 'Backend_config' );
 
 
 //date_default_timezone_set('Asia/Yangon');
-date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set('Asia/Kolkata');

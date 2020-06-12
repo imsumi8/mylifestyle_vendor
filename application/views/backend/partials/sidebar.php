@@ -14,10 +14,10 @@
           <img src="<?php echo img_url( $images[0]->img_path ); ?>" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info" style="margin-top: 2px;">
-            <a href="<?php echo site_url("admin/shops/edit/" . $shop_id); ?>">
-               <span class='fa fa-pencil-square-o' style="margin-left: 3px;"></span>
+            <!-- <a href="<?php echo site_url("admin/shops/edit/" . $shop_id); ?>">
+               <span class='fa fa-pencil-square-o' style="margin-left: 3px;"></span> -->
                <span style="font-size: 18px;color: #fff; font-style: bold;"><?php echo $this->Shop->get_one('shop0b69bc5dbd68bbd57ea13dfc5488e20a')->name . " "; ?></span>
-            </a>
+            <!-- </a> -->
         </div>
         <hr/>
       </div>

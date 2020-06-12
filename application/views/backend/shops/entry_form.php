@@ -884,7 +884,7 @@ echo form_open( '', $attributes);
 
           		<div class="tab-pane <?php echo $active_tab_shipping;?>" id="shipping">
           			<div class="row">
-          				<div class="col-md-4">
+          				<div class="col-md-6">
           					<div class="form-group">
 								<label><input type="radio" name="shipping" value="standard_shipping_enable" <?php 
 							       		$standard_shipping_enable = $shop->standard_shipping_enable;
@@ -892,14 +892,14 @@ echo form_open( '', $attributes);
 							          Standard Shipping Enabled </label>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<!-- <div class="col-md-4">
           					<div class="form-group">
 								<label><input type="radio" name="shipping" value="zone_shipping_enable" <?php 
 							       		$zone_shipping_enable = $shop->zone_shipping_enable;
 							        if ($zone_shipping_enable == 1) echo "checked"; ?> > Zone Shipping Enable </label>
 							</div>
-						</div>
-						<div class="col-md-4">
+						</div> -->
+						<div class="col-md-6">
           					<div class="form-group">
 								<label><input type="radio" name="shipping" value="no_shipping_enable" <?php 
 							       		$no_shipping_enable = $shop->no_shipping_enable;

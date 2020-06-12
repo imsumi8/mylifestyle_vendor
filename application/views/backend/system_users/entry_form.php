@@ -97,17 +97,17 @@
 			
 			<?php if ( @$user->user_is_sys_admin == false ): ?>
 
-			<div class="col-6" style="padding-left: 50px;">
+			<div class="col-6" style="padding-left: 50px; display:none">
 				<div class="form-group">
 					<label> <span style="font-size: 17px; color: red;">*</span>
 						<?php echo get_msg('allowed_modules')?></label>
 					
 					<?php foreach($this->Module->get_all()->result() as $module): ?>
 
-						<div class="form-check">
+						<div class="form-check" >
 							<label class="form-check-label">
 							
-							<?php echo form_checkbox('permissions[]', $module->module_id, set_checkbox('permissions', $module->module_id, $this->User->has_permission( $module->module_name, @$user->user_id )), 'checked'); ?>
+							<?php echo form_checkbox('permissions[]', $module->module_id, set_checkbox('permissions', $module->module_id, $this->User->has_permission( $module->module_name, @$user->user_id )), ''); ?>
 
 							<?php echo $module->module_desc; ?>
 

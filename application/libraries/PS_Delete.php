@@ -351,6 +351,21 @@ class PS_Delete {
 		return true;
 	}
 
+		/**
+	 * Delete the Vendor Request 
+	 *
+	 * @param      <type>  $id     The identifier
+	 */
+	function delete_vendor_req( $vendor_id )
+	{		
+		$conds = array( 'VENDOR_ID' => $vendor_id );
+		if ( ! $this->CI->Vendor->delete_by( $conds )) {
+		// if there is an error in deleting Product,
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Delete the Specification 
 	 *

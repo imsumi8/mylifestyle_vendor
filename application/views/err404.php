@@ -86,7 +86,7 @@
   <!-- /.lockscreen-item -->
   <br><br>
   <div class="lockscreen-footer text-center">
-    Copyright &copy; 2014-2019 <b><a href="http://panacea-soft.com" class="text-black">Panacea-Soft</a></b><br>
+    Copyright &copy; 2020 <b><a href="https://thelifestylesapp.com/" class="text-black">My Lifestyle App</a></b><br>
     All rights reserved
   </div>
 </div>
