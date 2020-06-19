@@ -64,6 +64,9 @@ class User extends PS_Model {
 			$this->db->where( 'user_name', $conds['user_name'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
 		// user_pass condition
 		if ( isset( $conds['user_password'] )) {
 			$this->db->where( 'user_password', md5( $conds['user_password'] ));
@@ -123,6 +126,26 @@ class User extends PS_Model {
 	 * @param int $user_id
 	 * @return bool
 	 */
+
+	 function update_user(&$user_data,  $user_id = false ){
+
+		$this->db->trans_start();
+
+		$this->db->where( 'user_id', $user_id );
+			
+		if ( ! $this->db->update( $this->table_name, $user_data )) {
+		// if error in updating, rollback
+			
+			$this->db->trans_rollback();
+			return false;
+		}
+
+		return $this->db->trans_commit();
+		
+		
+	 }
+
+
 	function save_user( &$user_data, $permission_data, $user_id = false )
 	{
 		// start the transaction
@@ -135,12 +158,14 @@ class User extends PS_Model {
 			$user_id = $this->generate_key( 'USR' );
 			$user_data['user_id'] = $user_id;
 
-			if ( ! $this->db->insert( $this->table_name, $user_data )) {
+	if ( ! $this->db->insert( $this->table_name, $user_data )) {
 			// if error in inserting new, rollback
 
 				$this->db->trans_rollback();
         		return false;
 			}
+
+			$insert_user_id = $user_id;
 
 		} else {
 		//else update the data
@@ -176,9 +201,9 @@ class User extends PS_Model {
         		return false;
 			}
 		}
-
+		$this->db->trans_commit();
 		// commit the transaction
-		return $this->db->trans_commit();
+		return $insert_user_id;
 	}
 
 	/**

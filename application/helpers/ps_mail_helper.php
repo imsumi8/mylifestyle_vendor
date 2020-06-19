@@ -397,7 +397,8 @@ if ( !function_exists( 'send_user_register_email' )) {
     $to = $user_email;
 
 	  $sender_name = $CI->Backend_config->get_one('be1')->sender_name;
-    $hi = get_msg('hi_label');
+	$hi = get_msg('hi_label');
+	
     $new_user_acc = get_msg('new_user_acc');
     $verify_code = get_msg('verify_code_label');
     $best_regards = get_msg( 'best_regards_label' );

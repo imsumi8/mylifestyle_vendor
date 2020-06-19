@@ -1,21 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Backend Controller which extends PS main Controller
- * 1) Loading Template
- */
+
 class BE_Controller extends PS_Controller {
 
-	/**
-	 * constructs required variables
-	 * 1) template path
-	 * 2) base url
-	 * 3) site url
-	 *
-	 * @param      <type>  $auth_level   The auth level
-	 * @param      <type>  $module_name  The module name
-	 */
+
 	function __construct( $auth_level, $module_name )
 	{
 		parent::__construct( $auth_level, $module_name );

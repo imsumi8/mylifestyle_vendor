@@ -25,5 +25,33 @@ class Version extends PS_Model {
 		if ( isset( $conds['id'] )) {
 			$this->db->where( 'id', $conds['id'] );
 		}
+
+		if ( isset( $conds['package_name'] )) {
+			$this->db->where( 'package_name', $conds['package_name'] );
+		}
+	}
+
+
+	function save_version( &$user_data, $user_id = false )
+	{
+		// start the transaction
+		$this->db->trans_start();
+
+	
+			// generate new user id
+			// $user_id = $this->generate_key( 'SHOP' );
+			// $user_data['id'] = $user_id;
+
+			if ( ! $this->db->insert( $this->table_name, $user_data )) {
+			// if error in inserting new, rollback
+
+				$this->db->trans_rollback();
+        		return false;
+			}
+
+		 
+		
+	
+		return $this->db->trans_commit();
 	}
 }

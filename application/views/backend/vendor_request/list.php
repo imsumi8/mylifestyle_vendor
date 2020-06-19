@@ -34,7 +34,8 @@
                 <td><?php echo $user->VENDOR_SHOP;?></td>
                 <td><?php echo $user->VENDOR_SHOP_ADDRESS;?></td>
                 <td><?php echo $user->VENDOR_GST;?></td>
-                <td><?php echo $user->VENDOR_SHOP;?></td>
+				<th><span class="th-title"><a href="<?php echo $user->VENDOR_LOGO;?>" target="_blank">VIEW</a></span></th>
+            
                 
 
 			

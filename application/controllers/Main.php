@@ -1,25 +1,9 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-/**
- * Main Controller
- * 1) login
- * 2) logout
- * 3) Reset Password
- */
-class Main extends BE_Controller {
-
-	/**
-	 * load required variables, libraries
-	 */
+<?php class Main extends BE_Controller {
 	function __construct() {
 		parent::__construct( NO_AUTH_CONTROL, 'MAIN' );
-
 		$this->load->library( 'PS_Mail' );
-
 		if ( isset( $_GET['url'] )) {
 		// if source url is existed, that url need to be redirected after login/logout
-		
 			$this->session->set_userdata( 'source_url', $_GET['url'] );
 		}
 	}
@@ -346,13 +330,6 @@ class Main extends BE_Controller {
 		return true;
 	}
 
-	/**
-     * Checking the reset code
-     *
-     * @param      <type>   $code   The code
-     *
-     * @return     boolean  ( description_of_the_return_value )
-     */
     function code_check( $code )
     {
     	if ( !$this->ResetCode->exists( array( 'code' => $code ))) {
@@ -363,6 +340,4 @@ class Main extends BE_Controller {
 
     	return true;
     }
-
-    
 }

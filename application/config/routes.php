@@ -66,6 +66,7 @@ $route['reset_email/(.*)'] = "main/reset_email/$1";
 $route['admin'] = "backend/dashboard";
 $route['admin/(.*)'] = "backend/$1";
 $route['rest/(.*)'] = "rest/$1";
+$route['rest_vendor/(.*)'] = "rest_vendor/$1";
 $route['guestajax/(.*)'] = "frontend/guestajax/$1";
 $route['userajax/(.*)'] = "frontend/userajax/$1";
 $route['(.*)'] = "frontend/home/$1";

@@ -30,6 +30,10 @@ class Shop extends PS_Model {
 		if ( isset( $conds['id'] )) {
 			$this->db->where( 'id', $conds['id'] );
 		}
+		
+		if ( isset( $conds['package_name'] )) {
+			$this->db->where( 'package_name', $conds['package_name'] );
+		}
 
 		// standard_shipping_enable condition
 		if ( isset( $conds['standard_shipping_enable'] )) {
@@ -53,6 +57,29 @@ class Shop extends PS_Model {
 			$this->db->or_like( 'name', $conds['searchterm'] );
 			$this->db->group_end();
 		}
+	}
+
+	function save_shop( &$user_data, $user_id = false )
+	{
+		// start the transaction
+		$this->db->trans_start();
+
+	
+			// generate new user id
+			$user_id = $this->generate_key( 'SHOP' );
+			$user_data['id'] = $user_id;
+
+			if ( ! $this->db->insert( $this->table_name, $user_data )) {
+			// if error in inserting new, rollback
+
+				$this->db->trans_rollback();
+        		return false;
+			}
+
+		 
+			$this->db->trans_commit();
+	
+		return $user_id;
 	}
 	
 }

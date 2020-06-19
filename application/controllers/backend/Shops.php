@@ -76,6 +76,10 @@ class Shops extends BE_Controller {
 			$data['id'] = $this->get_data( 'id' );
 		}
 
+		if ( $this->has_data( 'package_name' )) {
+			$data['package_name'] = $this->get_data( 'package_name' );
+		}
+
 		// prepare shipping_id
 		if ( $this->has_data( 'shipping_id' )) {
 			$data['shipping_id'] = $this->get_data( 'shipping_id' );

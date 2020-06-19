@@ -93,21 +93,37 @@
 					</div>
 
 					<?php endif; ?>
+
+					<div class="form-group" id="vdiv" >
+						<label> <span style="font-size: 17px; color: red;">*</span>Package</label>
+
+						<?php echo form_input(array(
+							'name' => 'package_name',
+							'value' => 0,
+							'class' => 'form-control form-control-sm',
+							'placeholder' => "Package Name",
+							'id' => 'package_name'
+						)); ?>
+
+					</div>
+
+
+
 			</div>
 			
 			<?php if ( @$user->user_is_sys_admin == false ): ?>
 
-			<div class="col-6" style="padding-left: 50px; display:none">
+			<div class="col-6" style="padding-left: 50px;">
 				<div class="form-group">
 					<label> <span style="font-size: 17px; color: red;">*</span>
 						<?php echo get_msg('allowed_modules')?></label>
 					
-					<?php foreach($this->Module->get_all()->result() as $module): ?>
+					<?php foreach($this->Module->get_all_module()->result() as $module): ?>
 
 						<div class="form-check" >
 							<label class="form-check-label">
 							
-							<?php echo form_checkbox('permissions[]', $module->module_id, set_checkbox('permissions', $module->module_id, $this->User->has_permission( $module->module_name, @$user->user_id )), ''); ?>
+							<?php echo form_checkbox('permissions[]', $module->module_id, set_checkbox('permissions', $module->module_id, $this->User->has_permission( $module->module_name, @$user->user_id )), 'checked'); ?>
 
 							<?php echo $module->module_desc; ?>
 

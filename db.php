@@ -1,6 +1,6 @@
 <?php
 
-$link=mysqli_connect("localhost","dcskme8d_lifesty", "imsumi8@0507","dcskme8d_lifestyle");
+$link=mysqli_connect("localhost","thelij7p_mylife", "imsumi8@0509","thelij7p_mylifestyle");
 
 if($link){
 // 	echo "Connected";

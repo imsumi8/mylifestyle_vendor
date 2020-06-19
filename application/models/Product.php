@@ -74,6 +74,10 @@ class Product extends PS_Model {
 			$this->db->where( 'product_measurement', $conds['product_measurement'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
+
 		// rating condition
 		if ( isset( $conds['rating_value'] ) ) {
 			// For Rating value with comma 3,4,5

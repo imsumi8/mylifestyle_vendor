@@ -40,6 +40,10 @@ class Category extends PS_Model {
 			$this->db->where( 'name', $conds['name'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
+
 		// cat_ordering condition
 		if ( isset( $conds['ordering'] )) {
 			$this->db->where( 'ordering', $conds['ordering'] );

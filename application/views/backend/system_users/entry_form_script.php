@@ -52,7 +52,7 @@
 				"permissions[]": "<?php echo get_msg( 'err_permission_blank' ); ?>"
 			},
 			errorPlacement: function(error, element) {
-				console.log( $(error).text());
+				// console.log( $(error).text());
 				if (element.attr("name") == "permissions[]" ) {
 					console.log( $(error).text());
 					$("#perm_err label").html($(error).text());
@@ -65,5 +65,13 @@
 	}
 
 	<?php endif; ?>
+
+	$('#role_id').change(function(){
+  if($(this).val() == '2'){ // or this.value == 'volvo'
+    $('#vdiv').show();
+  }else{
+	$('#vdiv').hide(); 
+  }
+});
 
 </script>

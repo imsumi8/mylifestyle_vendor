@@ -121,23 +121,117 @@ class System_users extends BE_Controller {
 		$permissions = ( $this->get_data( 'permissions' ) != false )? $this->get_data( 'permissions' ): array();
 
 		// save data
-		if ( ! $this->User->save_user( $user_data, $permissions, $user_id )) {
+
+		$insert_user_id =$this->User->save_user( $user_data, $permissions, $user_id);
+
+		if ($insert_user_id ) {
 		// if there is an error in inserting user data,	
 
-			$this->set_flash_msg( 'error', get_msg( 'err_model' ));
-		} else {
-		// if no eror in inserting
+		
+	
+			if($user_id){
 
-			if ( $user_id ) {
-			// if user id is not false, show success_add message
-				
 				$this->set_flash_msg( 'success', get_msg( 'success_user_edit' ));
-			} else {
-			// if user id is false, show success_edit message
+
+			}else{
+
+	if($this->get_data( 'role_id' )==2){
+				$data =array();
+			   
+			$data['shipping_id'] = "shpaf729bfacb0d4afe33c4d04941ca4d9b";
+			$data['name'] = "";
+			$data['user_id'] = $insert_user_id;
+			$data['package_name'] = $this->get_data( 'package_name' );
+			$data['description'] = "";
+			$data['email'] = $this->get_data( 'user_email' );
+			$data['lat'] = "";
+			$data['lng'] = "";
+			$data['address1'] = "";
+		    $data['address2'] = "";
+			$data['address3'] = "";
+			$data['about_phone1'] = "";
+			$data['about_phone2'] = "";
+			$data['about_phone3'] = "";
+			$data['about_website'] = "";
+			$data['facebook'] = "";
+			$data['google_plus'] = "";
+			$data['instagram'] = "";
+			$data['youtube'] = "";
+			$data['pinterest'] = "";
+			$data['twitter'] = "";
+			$data['pinterest'] = "";
+			$data['messenger'] = "";
+			$data['stripe_publishable_key'] = "";
+			$data['stripe_secret_key'] = "";
+			$data['paypal_environment'] = "";
+			$data['paypal_merchant_id'] = "";
+			$data['paypal_public_key'] = "";
+			$data['paypal_private_key'] = "";
+			$data['bank_account'] = "";
+			$data['bank_name'] = "";
+			$data['bank_code'] = "";
+			$data['branch_code'] = "";
+			$data['swift_code'] = "";
+			$data['cod_email'] = "";
+			$data['currency_symbol'] = "₹";
+			$data['currency_short_form'] = "INR";
+			$data['sender_email'] = "";
+			$data['overall_tax_label'] = "";
+			$data['shipping_tax_label'] = "";
+			$data['whapsapp_no'] = "";
+			$data['refund_policy'] = "";
+			$data['banktransfer_enabled'] = "";
+			$data['refund_policy'] = "";
+			$data['privacy_policy'] = "";
+			$data['terms'] = "";
+			$data['status'] = "";
+			$data['stripe_enabled'] = 0;
+			$data['paypal_enabled'] = 0;
+			$data['cod_enabled'] = 1;
+			$data['standard_shipping_enable'] = 1;
+			$data['zone_shipping_enable'] = 0;
+			$data['no_shipping_enable'] = 0;
+
+			$insshop_id = $this->Shop->save_shop( $data, false );
+	
+			if ( ! $insshop_id) {
+
+				
+
+				$this->set_flash_msg( 'error', get_msg( 'err_model' ));
+
+			}else{
+
+				$user_data=array();
+				$user_data['shop_id'] = $insshop_id;
+				$this->User->update_user( $user_data, $insert_user_id);
+
+				$data=array();
+				$data['version_no'] = "1.0";
+				$data['shop_id'] = $insshop_id;
+				$data['package_name'] = $this->get_data( 'package_name' );
+				$data['version_force_update'] = 0;
+				$data['version_title'] = "New Version Available";
+				$data['version_message'] = "New Version Available for update in Google Play.";
+				$data['version_need_clear_data'] = 1;
+
+				$this->Version->save_version( $data, false );
 
 				$this->set_flash_msg( 'success', get_msg( 'success_user_add' ));
 			}
-		}
+			
+	}
+
+
+}	
+ 
+				
+			
+		
+		}else {
+
+			$this->set_flash_msg( 'error', get_msg( 'err_model' ));
+		 }
 
 		redirect( $this->module_site_url());
 	}

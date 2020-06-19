@@ -17,7 +17,9 @@
   		$conds = array( 'img_type' => 'fav-icon', 'img_parent_id' => 'be1' );
 		$images = $this->Image->get_all_by( $conds )->result();
 	?>
+	<?php if($images){ ?>
   <link rel="icon" href="<?php echo img_url( $images[0]->img_path ); ?>">
+  <?php } ?>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/backend/css/animate.css'); ?>">

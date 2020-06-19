@@ -1,20 +1,7 @@
-	<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 require_once( APPPATH .'libraries/REST_Controller.php' );
 
 class My_Controller {}
-
-/**
- * PanaceaSoft Main Controller which extends the CI Controller
- * 1) Authentication
- * 2) Load Template 
- * 3) Load View
- * 4) Base Url & Site Url
- * 5) Set flash message
- * 6) Get Pagination Config
- * 7) Search Term Handler
- */
 class PS_Controller extends CI_Controller
 {
 	// template folder path
@@ -44,7 +31,11 @@ class PS_Controller extends CI_Controller
 	function __construct( $auth_level, $module_name )
 	{
 		parent::__construct();
-
+require_once( APPPATH .'libraries/REST_Controller.php' );
+require_once( APPPATH .'core/FE_Controller.php' );
+require_once( APPPATH .'core/BE_Controller.php' );
+require_once( APPPATH .'core/API_Controller.php' );
+require_once( APPPATH .'core/Ajax_Controller.php' );
 		// constructs required variables
 		$this->template_path = "";
 		$this->auth_level = $auth_level;
@@ -166,13 +157,9 @@ class PS_Controller extends CI_Controller
 		$data['load_side_menus'] = $load_side_menus;
 		
 		if ( !empty( $this->template_path )) {
-		// if the template path is not empty,
-			
-			$this->load->view( $this->template_path .'/'. $view, $data );	
+			$this->load->view( $this->template_path .'/'. $view, $data);	
 		} else {
-		// if the template path is empty
-			
-			$this->load->view( $view );	
+		$this->load->view( $view );	
 		}
 	}
 

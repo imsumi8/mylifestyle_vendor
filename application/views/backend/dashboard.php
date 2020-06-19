@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 col-xlg-3">
+      <div class="col-md-6 col-xlg-3">
         <div class="card earning-widget">
           <?php 
 
@@ -146,22 +146,8 @@
         </div>
       </div>
 
-      <div class="col-md-4 col-xlg-3">
-        <div class="card earning-widget">
-          <?php 
-
-            $data = array(
-              'panel_title' => get_msg('comment_label'),
-              'total_count' => $this->Commentheader->count_all(),
-              'data' => $this->Commentheader->get_rec_comment(2)->result()
-            );
-
-            $this->load->view( $template_path .'/components/d2_comment_panel', $data ); 
-          ?>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-xlg-3">
+  
+      <div class="col-md-6 col-xlg-3">
         <div class="card card-widget widget-user-2">
           <?php 
             $data = array(

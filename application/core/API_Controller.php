@@ -203,6 +203,10 @@ class API_Controller extends REST_Controller
 		$start = $this->post('start_date');
 		$end   = $this->post('end_date');
 		$user_id = $this->post('user_id');
+		$package_name = $this->post('package_name');
+
+		if(!$package_name)
+		$package_name ="com.my.lifestyle";
 		  
 		$conds['start_date'] = $start;
 		$conds['end_date']   = $end;
@@ -215,7 +219,7 @@ class API_Controller extends REST_Controller
 		//$deleted_his_ids = $this->Delete_history->get_all_history_by($conds)->result();
 		$deleted_his_ids = $this->Delete_history->get_all_by($conds)->result();
 
-		$this->custom_response_history( $deleted_his_ids, $user_id, false );
+		$this->custom_response_history( $deleted_his_ids, $user_id,$package_name, false );
 
 	}
 
@@ -224,16 +228,18 @@ class API_Controller extends REST_Controller
 	 *
 	 * @param      <type>  $data   The data
 	 */
-	function custom_response_history( $data, $user_id, $require_convert = true )
+	function custom_response_history( $data, $user_id,$package_name, $require_convert = true )
 	{
-		
+		$conds['package_name']   = $package_name;
+		$version_detail = $this->Version->get_all_by($conds)->result();
 
 		$version_object = new stdClass; 
-		$version_object->version_no           = $this->Version->get_one("1")->version_no; 
-		$version_object->version_force_update = $this->Version->get_one("1")->version_force_update;
-		$version_object->version_title        = $this->Version->get_one("1")->version_title;
-		$version_object->version_message      = $this->Version->get_one("1")->version_message;
-		$version_object->version_need_clear_data      = $this->Version->get_one("1")->version_need_clear_data;
+		$version_object->version_no           = $version_detail[0]->version_no; 
+		$version_object->version_shop_id           = $version_detail[0]->shop_id; 
+		$version_object->version_force_update = $version_detail[0]->version_force_update;
+		$version_object->version_title        = $version_detail[0]->version_title;
+		$version_object->version_message      = $version_detail[0]->version_message;
+		$version_object->version_need_clear_data      = $version_detail[0]->version_need_clear_data;
 		$user_object->is_banned = $this->User->get_one($user_id)->is_banned;
 
 		if ($user_object->is_banned == "") {
@@ -839,11 +845,18 @@ class API_Controller extends REST_Controller
 
 		// get id
 		$id = $this->get( 'id' );
+		$package_name = $this->get('package_name');
+
+		if(!$package_name)
+		$package_name = "com.my.lifestyle";
 
 		if ( !$id ) {
-			$shop = $this->model->get_all()->result();
-			$shop_id = $shop[0]->id;
-			$data = $this->model->get_one($shop_id);
+			$cond =array();
+		$cond['package_name']   = $package_name;
+		$data = $this->model->get_all_by($cond)->row();
+			// $shop = $this->model->get_all()->result();
+			// $shop_id = $shop[0]->id;
+			// $data = $this->model->get_one($shop_id);
 		}
 		$this->custom_response( $data );
 	}
@@ -1267,10 +1280,11 @@ class API_Controller extends REST_Controller
 		//Validation For Shop ID is required
 		if( $shop_id == "" ) {
 			$this->error_response( get_msg( 'shop_id_required' ));
-		} else if ( $shop_name == "" ) {
-			//Checking for invalid shop
-			$this->error_response( get_msg( 'shop_id_invalid' ));
-		}
+		} 
+		// else if ( $shop_name == "" ) {
+		// 	//Checking for invalid shop
+		// 	$this->error_response( get_msg( 'shop_id_invalid' ));
+		// }
 
 		if ($zone_shipping_enable == 1) {
 
@@ -1338,7 +1352,7 @@ class API_Controller extends REST_Controller
 			$this->error_response( get_msg( 'shop_id_required' ));
 		} else if ( $shop_name == "" ) {
 			//Checking for invalid shop
-			$this->error_response( get_msg( 'shop_id_invalid' ));
+			// $this->error_response( get_msg( 'shop_id_invalid' ));
 		} else if ($country_id == "") {
 			//Validation For Country ID is required
 			$this->error_response( get_msg( 'country_id_required' ));
@@ -1349,28 +1363,28 @@ class API_Controller extends REST_Controller
 
 		//Get Countries From Junction Table
 		
-		$conds_zone['shop_id'] = $shop_id;
+		// $conds_zone['shop_id'] = $shop_id;
 		
 		$conds_zone['country_id'] = $country_id;
 
 
-		$zone_junctions = $this->Zone_junction->get_all_by($conds_zone)->result();
+		// $zone_junctions = $this->Zone_junction->get_all_by($conds_zone)->result();
 
-		$zj_array = array();
+		// $zj_array = array();
 
-		foreach ( $zone_junctions as $zj ) {
-			$zj_array[] = $zj->city_id;
-		}
+		// foreach ( $zone_junctions as $zj ) {
+		// 	$zj_array[] = $zj->city_id;
+		// }
 
-		//Makeing unique country
-		$zj_array_unique = array_unique( $zj_array );
+		// //Makeing unique country
+		// $zj_array_unique = array_unique( $zj_array );
 
 
 		$limit = $this->get( 'limit' );
 		$offset = $this->get( 'offset' );
 
 		//get only unique country data
-		$cities = $this->City->get_all_in($zj_array_unique, $limit, $offset)->result();
+		$cities = $this->City->get_all_by($conds_zone, $limit, $offset)->result();
 
 		$this->custom_response( $cities );
 
