@@ -31,6 +31,9 @@ class Shipping extends PS_Model {
 			$this->db->where( 'id', $conds['id'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
 		// name condition
 		if ( isset( $conds['name'] )) {
 			$this->db->where( 'name', $conds['name'] );
