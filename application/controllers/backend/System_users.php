@@ -138,7 +138,7 @@ class System_users extends BE_Controller {
 	if($this->get_data( 'role_id' )==2){
 				$data =array();
 			   
-			$data['shipping_id'] = "shpaf729bfacb0d4afe33c4d04941ca4d9b";
+			$data['shipping_id'] = "";
 			$data['name'] = "";
 			$data['user_id'] = $insert_user_id;
 			$data['package_name'] = $this->get_data( 'package_name' );
@@ -188,9 +188,9 @@ class System_users extends BE_Controller {
 			$data['stripe_enabled'] = 0;
 			$data['paypal_enabled'] = 0;
 			$data['cod_enabled'] = 1;
-			$data['standard_shipping_enable'] = 1;
+			$data['standard_shipping_enable'] = 0;
 			$data['zone_shipping_enable'] = 0;
-			$data['no_shipping_enable'] = 0;
+			$data['no_shipping_enable'] = 1;
 
 			$insshop_id = $this->Shop->save_shop( $data, false );
 	
