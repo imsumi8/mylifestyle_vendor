@@ -21,7 +21,10 @@
 			<?php
 				$options=array();
 				$options[0]=get_msg('select_country');
-				$countries = $this->Country->get_all();
+				$logged_in_user = $this->ps_auth->get_user_info();
+		
+				$conds['shop_id'] = $logged_in_user->shop_id;
+				$countries = $this->Country->get_all_by( $conds);
 				foreach($countries->result() as $country) {
 					
 						$options[$country->id]=$country->name;

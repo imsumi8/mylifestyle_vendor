@@ -31,6 +31,10 @@ class Popularproduct extends PS_Model {
 			$this->db->where( 'id', $conds['id'] );	
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );	
+		}
+
 		// category id condition
 		if ( isset( $conds['cat_id'] )) {
 			if ($conds['cat_id'] != "" ) {

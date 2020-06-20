@@ -26,6 +26,10 @@ class Version extends PS_Model {
 			$this->db->where( 'id', $conds['id'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
+
 		if ( isset( $conds['package_name'] )) {
 			$this->db->where( 'package_name', $conds['package_name'] );
 		}

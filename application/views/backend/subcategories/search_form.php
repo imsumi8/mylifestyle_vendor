@@ -21,7 +21,10 @@
 			<?php
 				$options=array();
 				$options[0]=get_msg('Prd_search_cat');
-				$categories = $this->Category->get_all();
+				$logged_in_user = $this->ps_auth->get_user_info();
+		
+				$conds['shop_id'] = $logged_in_user->shop_id;
+				$categories = $this->Category->get_all_by($conds);
 				foreach($categories->result() as $cat) {
 					
 						$options[$cat->id]=$cat->name;

@@ -21,6 +21,8 @@ class Discounts extends BE_Controller {
       function index() {
 
         // no publish filter
+        $logged_in_user = $this->ps_auth->get_user_info();
+		    $conds['shop_id'] = $logged_in_user->shop_id;
         $conds['no_publish_filter'] = 1;
 
         // get rows count
@@ -46,6 +48,9 @@ class Discounts extends BE_Controller {
         $conds = array( 'searchterm' => $this->searchterm_handler( $this->input->post( 'searchterm' )) );
         // no publish filter
         $conds['no_publish_filter'] = 1;
+        $logged_in_user = $this->ps_auth->get_user_info();
+		
+        $conds['shop_id'] = $logged_in_user->shop_id;
 
         // pagination
         $this->data['rows_count'] = $this->Discount->count_all_by( $conds );
@@ -63,6 +68,8 @@ class Discounts extends BE_Controller {
       function add() {
 
         // no publish filter
+        $logged_in_user = $this->ps_auth->get_user_info();
+		    $conds['shop_id'] = $logged_in_user->shop_id;
         $conds['no_publish_filter'] = 1;
 
         // breadcrumb urls
@@ -72,7 +79,7 @@ class Discounts extends BE_Controller {
         $this->data['rows_count'] = $this->Product->count_all_by( $conds );
 
         // get Product
-        $this->data['prds_list'] = $this->Product->get_all_by( $conds, 40, $this->uri->segment( 4 ) );
+         $this->data['prds_list'] = $this->Product->get_all_by( $conds, 40, $this->uri->segment( 4 ) );
 
         // call the core add logic
         parent::add();
@@ -88,6 +95,8 @@ class Discounts extends BE_Controller {
 
         // no publish filter
         $conds['no_publish_filter'] = 1;
+        $logged_in_user = $this->ps_auth->get_user_info();
+		    $conds['shop_id'] = $logged_in_user->shop_id;
 
         // breadcrumb urls
         $this->data['action_title'] = get_msg( 'dis_edit' );
@@ -168,6 +177,7 @@ class Discounts extends BE_Controller {
          }
          
          // set timezone
+         $data['shop_id'] = $logged_in_user->shop_id;
          $data['added_user_id'] = $logged_in_user->user_id;
 
          if($id == "") {

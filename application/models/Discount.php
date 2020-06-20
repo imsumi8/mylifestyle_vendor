@@ -33,6 +33,10 @@ class Discount extends PS_Model {
 		}
 
 		// discount percent
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
+
 		if ( isset( $conds['percent'] )) {
 			$this->db->where( 'percent', $conds['percent'] );
 		}

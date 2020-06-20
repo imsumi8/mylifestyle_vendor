@@ -19,18 +19,20 @@
 </div>
 
 <?php 
-    $jan_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'1'))->result());
-    $feb_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'2'))->result());
-    $mar_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'3'))->result());
-    $apr_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'4'))->result());
-    $may_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'5'))->result());
-    $jun_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'6'))->result());
-    $jul_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'7'))->result());
-    $aug_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'8'))->result());
-    $sep_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'9'))->result());
-    $oct_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'10'))->result());
-    $nov_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'11'))->result());
-    $dec_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'12'))->result());
+ $shop_id = $this->ps_auth->get_user_info()->shop_id;
+
+    $jan_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'1','shop_id'=>$shop_id))->result());
+    $feb_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'2','shop_id'=>$shop_id))->result());
+    $mar_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'3','shop_id'=>$shop_id))->result());
+    $apr_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'4','shop_id'=>$shop_id))->result());
+    $may_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'5','shop_id'=>$shop_id))->result());
+    $jun_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'6','shop_id'=>$shop_id))->result());
+    $jul_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'7','shop_id'=>$shop_id))->result());
+    $aug_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'8','shop_id'=>$shop_id))->result());
+    $sep_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'9','shop_id'=>$shop_id))->result());
+    $oct_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'10','shop_id'=>$shop_id))->result());
+    $nov_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'11','shop_id'=>$shop_id))->result());
+    $dec_count = count($this->Transactioncount->get_transaction_by_month(array('added_date'=>'12','shop_id'=>$shop_id))->result());
 
 ?>
 

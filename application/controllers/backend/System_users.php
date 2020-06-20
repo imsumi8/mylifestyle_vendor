@@ -163,6 +163,8 @@ class System_users extends BE_Controller {
 			$data['messenger'] = "";
 			$data['stripe_publishable_key'] = "";
 			$data['stripe_secret_key'] = "";
+			$data['razor_publishable_key'] = "";
+			$data['razor_secret_key'] = "";
 			$data['paypal_environment'] = "";
 			$data['paypal_merchant_id'] = "";
 			$data['paypal_public_key'] = "";
@@ -186,6 +188,7 @@ class System_users extends BE_Controller {
 			$data['terms'] = "";
 			$data['status'] = "";
 			$data['stripe_enabled'] = 0;
+			$data['razor_enabled'] = 0;
 			$data['paypal_enabled'] = 0;
 			$data['cod_enabled'] = 1;
 			$data['standard_shipping_enable'] = 0;

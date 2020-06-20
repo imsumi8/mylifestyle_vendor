@@ -20,6 +20,9 @@ class Purchasedproducts extends BE_Controller {
 	function index() {
 		
 		// no publish filter
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds['no_publish_filter'] = 1;
 		
 		$this->data['selected_cat_id'] = 0;
@@ -125,6 +128,9 @@ class Purchasedproducts extends BE_Controller {
 		
 		// condition passing date
 		$conds['date'] = $this->input->post( 'date' );
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 
 		// pagination
 		$this->data['rows_count'] = $this->Purchasedproduct->count_purchased_product_by( $conds );

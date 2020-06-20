@@ -17,25 +17,27 @@ class Shops extends BE_Controller {
 	/**
 	 * Home page for the shops controller
 	 */
-	function index( $id = "shop0b69bc5dbd68bbd57ea13dfc5488e20a" ) {
+	function index( ) {
+
+		$logged_in_user = $this->ps_auth->get_user_info();
+		$conds['id'] = $logged_in_user->shop_id; 
 
 		if ( $this->is_POST()) {
 		// if the method is post
 
 			// server side validation
 			if ( $this->is_valid_input()) {
-
+				$shop_id = $this->Shop->get_one_by( $conds );
 				// save user info
-				$this->save( $id );
+				$this->save( $shop_id->id );
 			}
 		}
 
 
-		$logged_in_user = $this->ps_auth->get_user_info();
-		 
+	
 	 	$conds['status'] = 1;
 
-		$this->data['shop'] = $this->Shop->get_one( $id );
+		$this->data['shop'] = $this->Shop->get_one_by( $conds );
 		 
 		$this->load_form($this->data);
 
@@ -48,7 +50,9 @@ class Shops extends BE_Controller {
 		
 		$shops = $this->Shop->get_all()->result(); 
 		$shop_id = $shops[0]->id;
-		$this->data['shop'] = $this->Shop->get_one( $shop_id );
+		$logged_in_user = $this->ps_auth->get_user_info();
+		$conds['id'] = $logged_in_user->shop_id; 
+		$this->data['shop'] = $this->Shop->get_one_by( $conds );
 		$this->data['current_tab'] = $this->uri->segment(5);
 
 		// call the parent edit logic
@@ -190,6 +194,15 @@ class Shops extends BE_Controller {
 			$data['stripe_secret_key'] = $this->get_data( 'stripe_secret_key' );
 		}
 
+		if ( $this->has_data( 'razor_publishable_key' )) {
+			$data['razor_publishable_key'] = $this->get_data( 'razor_publishable_key' );
+		}
+
+		// prepare shop stripe_secret_key
+		if ( $this->has_data( 'razor_secret_key' )) {
+			$data['razor_secret_key'] = $this->get_data( 'razor_secret_key' );
+		}
+
 		// prepare shop bank_account
 		if ( $this->has_data( 'paypal_environment' )) {
 			$data['paypal_environment'] = $this->get_data( 'paypal_environment' );
@@ -309,6 +322,12 @@ class Shops extends BE_Controller {
 			$data['stripe_enabled'] = 0;
 		}
 
+		if ( $this->has_data( 'razor_enabled' )) {
+			$data['razor_enabled'] = 1;
+		} else {
+			$data['razor_enabled'] = 0;
+		}
+
 		// if 'paypal_enabled' is checked,
 		if ( $this->has_data( 'paypal_enabled' )) {
 			$data['paypal_enabled'] = 1;
@@ -343,6 +362,8 @@ class Shops extends BE_Controller {
 			$data['zone_shipping_enable'] = 0;
 			$data['standard_shipping_enable'] = 0;
 		}
+
+		$id = $logged_in_user->shop_id; 
 
 		// save about
 		if ( ! $this->Shop->save( $data, $id )) {

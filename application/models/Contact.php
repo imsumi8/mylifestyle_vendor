@@ -28,6 +28,10 @@ class Contact extends PS_Model {
 			$this->db->where( 'id', $conds['id'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
+
 		$this->db->order_by( 'added_date', 'desc' );	
 
 	}

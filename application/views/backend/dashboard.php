@@ -24,8 +24,8 @@
       <div class="col-lg-3">
         <!-- small box -->
         <?php 
-
-          $pending = $this->Transactionheader->get_transaction_status_count(array('trans_status_id'=> 1))->result();
+           $shop_id = $this->ps_auth->get_user_info()->shop_id;
+          $pending = $this->Transactionheader->get_transaction_status_count(array('trans_status_id'=> 1,'shop_id'=>$shop_id))->result();
           $result = $pending[0]->s_count;
           // print_r($pending);die;
           $data = array(
@@ -43,7 +43,7 @@
         <!-- small box -->
         <?php 
        
-        $pending = $this->Transactionheader->get_transaction_status_count(array('trans_status_id'=> 2))->result();
+        $pending = $this->Transactionheader->get_transaction_status_count(array('trans_status_id'=> 2,'shop_id'=>$shop_id))->result();
         $result = $pending[0]->s_count;
         $data = array(
             'label' => get_msg( 'delivery_count'),
@@ -60,7 +60,7 @@
         <!-- small box -->
         <?php 
        
-        $pending = $this->Transactionheader->get_transaction_status_count(array('trans_status_id'=> 3))->result();
+        $pending = $this->Transactionheader->get_transaction_status_count(array('trans_status_id'=> 3,'shop_id'=>$shop_id))->result();
         $result = $pending[0]->s_count;
         $data = array(
             'label' => get_msg( 'completed_count'),
@@ -77,9 +77,10 @@
         <!-- small box -->
         <?php 
        
+       $conds['shop_id']=$shop_id;
         $data = array(
             'label' => get_msg( 'order_count'),
-            'total_count' => $this->Transactionheader->count_all(),
+            'total_count' => $this->Transactionheader->count_all_by($conds),
             'status_id' => '0',
             'icon' => "fa fa-shopping-bag",
             'color' => "bg-primary"
@@ -94,8 +95,8 @@
             $data = array(
               'panel_title' => get_msg('purchased_prd_info'),
               'module_name' => 'purchasedproduct' ,
-              'total_count' => $this->Purchasedproduct->count_all(),
-              'data' => $this->Purchasedproduct->get_purchased_count(5)->result()
+              'total_count' => $this->Purchasedproduct->count_all_by($conds),
+              'data' => $this->Purchasedproduct->get_purchased_count($conds)->result()
             );
 
             $this->load->view( $template_path .'/components/d2_most_purchased_product_panel', $data ); 
@@ -109,7 +110,7 @@
             $data = array(
               'panel_title' => get_msg('total_revenue'),
               'module_name' => 'purchasedproduct' ,
-              'total_count' => $this->Transactioncount->count_all(),
+              'total_count' => $this->Transactioncount->get_transaction_count($conds),
             );
 
             $this->load->view( $template_path .'/components/d2_total_revenue_panel', $data ); 
@@ -123,8 +124,8 @@
             $data = array(
               'panel_title' => get_msg('transaction_table'),
               'module_name' => 'transactionheaders' ,
-              'total_count' => $this->Transactionheader->count_all(),
-              'data' => $this->Transactionheader->get_rec_transaction(4)->result()
+              'total_count' => $this->Transactionheader->count_all_by($conds),
+              'data' => $this->Transactionheader->get_rec_transaction($conds)->result()
             );
 
             $this->load->view( $template_path .'/components/d2_transaction_panel', $data ); 
@@ -152,8 +153,8 @@
           <?php 
             $data = array(
               'panel_title' => get_msg('rec_prd_info'),
-              'total_count' => $this->Product->count_all(),
-              'data' => $this->Product->get_rec_product(3)->result()
+              'total_count' => $this->Product->count_all_by($conds),
+              'data' => $this->Product->get_rec_product($conds)->result()
             );
 
             $this->load->view( $template_path .'/components/d2_rec_product_panel', $data ); 

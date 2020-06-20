@@ -30,6 +30,10 @@ class Country extends PS_Model {
 		if ( isset( $conds['name'] )) {
 			$this->db->where( 'name', $conds['name'] );
 		}
+
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
 		
 		// searchterm
 		if ( isset( $conds['searchterm'] )) {

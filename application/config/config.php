@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | WARNING: You MUST set this value!
 |
 | If it is not set, then CodeIgniter will try guess the protocol and path
-| your installation, but due to security concerns the hostname will be set
+| your installation, but due to security concerns these hostname will be set
 | to $_SERVER['SERVER_ADDR'] if available, or localhost otherwise.
 | The auto-detection mechanism exists only for convenience during
 | development and MUST NOT be used in production!
@@ -23,16 +23,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+$config['base_url'] = 'http://127.0.0.1/psstore/';
 
-if ( strlen( substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], "index.php" ))) == 0) {
-	$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+// if ( strlen( substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], "index.php" ))) == 0) {
+// 	$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-} else {
+// } else {
 
-	$config['base_url']	= "http://" . $_SERVER['HTTP_HOST']. substr($_SERVER['REQUEST_URI'],0,stripos($_SERVER['REQUEST_URI'],"index.php"));
+// 	$config['base_url']	= "http://" . $_SERVER['HTTP_HOST']. substr($_SERVER['REQUEST_URI'],0,stripos($_SERVER['REQUEST_URI'],"index.php"));
 
-}
+// }
 
 
 /*
@@ -469,6 +469,7 @@ $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
 	'rest/.*?',
+	'rest_vendor/.*?',
 	'admin/fileupload/.*?',
 	'userajax/.*?',
 	'guestajax/.*?'

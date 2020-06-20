@@ -19,6 +19,9 @@ class Registered_users extends BE_Controller {
 	function index() {
 
 		//registered users filter
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds = array( 'register_role_id' => 4 );
 
 		// get rows count
@@ -44,6 +47,9 @@ class Registered_users extends BE_Controller {
 		
 		// condition
 		$conds = array( 'searchterm' => $search_term , 'register_role_id' => 4);
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 
 		$this->data['rows_count'] = $this->User->count_all_by( $conds );
 

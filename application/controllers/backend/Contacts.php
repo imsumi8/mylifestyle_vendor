@@ -21,10 +21,13 @@ class Contacts extends BE_Controller {
 
 
 		// get rows count
-		$this->data['rows_count'] = $this->Contact->count_all_by( );
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
+		$this->data['rows_count'] = $this->Contact->count_all_by( $conds);
 
 		// get comments
-		$this->data['contacts'] = $this->Contact->get_all_by( $this->pag['per_page'], $this->uri->segment( 4 ) );
+		$this->data['contacts'] = $this->Contact->get_all_by($conds, $this->pag['per_page'], $this->uri->segment( 4 ) );
 
 		// load index logic
 		parent::index();

@@ -20,6 +20,9 @@ class Purchasedcategories extends BE_Controller {
 	function index() {
 		
 		// no publish filter
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds['no_publish_filter'] = 1;
 
 		// get rows count
@@ -83,6 +86,9 @@ class Purchasedcategories extends BE_Controller {
 		
 		//no publish filter
 
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds['no_publish_filter'] = 1;
 
 		// pagination

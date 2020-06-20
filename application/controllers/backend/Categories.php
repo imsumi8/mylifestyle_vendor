@@ -21,6 +21,9 @@ class Categories extends BE_Controller {
 		
 		// no delete flag
 		// no publish filter
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds['no_publish_filter'] = 1;
 
 		// get rows count
@@ -46,6 +49,9 @@ class Categories extends BE_Controller {
 		$conds = array( 'searchterm' => $this->searchterm_handler( $this->input->post( 'searchterm' )) );
 		// no publish filter
 		$conds['no_publish_filter'] = 1;
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 
 		// pagination
 		$this->data['rows_count'] = $this->Category->count_all_by( $conds );
@@ -109,6 +115,8 @@ class Categories extends BE_Controller {
 		}
 		
 		// set timezone
+	
+		$data['shop_id'] = $logged_in_user->shop_id;
 		$data['added_user_id'] = $logged_in_user->user_id;
 
 		if($id == "") {

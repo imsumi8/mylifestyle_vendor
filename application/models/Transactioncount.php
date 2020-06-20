@@ -26,6 +26,8 @@ class Transactioncount extends PS_Model {
 			$this->db->where( 'id', $conds['id'] );
 		}
 
+	
+
 		// user_id condition
 		if ( isset( $conds['user_id'] )) {
 			$this->db->where( 'user_id', $conds['user_id'] );

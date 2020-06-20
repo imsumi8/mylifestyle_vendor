@@ -32,6 +32,10 @@ class Transactionheader extends PS_Model {
 			$this->db->where( 'user_id', $conds['user_id'] );
 		}
 
+		if ( isset( $conds['shop_id'] )) {
+			$this->db->where( 'shop_id', $conds['shop_id'] );
+		}
+
 		if ( isset( $conds['contact_name'] )) {
 			$this->db->where( 'contact_name', $conds['contact_name'] );
 		}

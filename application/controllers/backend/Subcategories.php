@@ -19,13 +19,15 @@ class Subcategories extends BE_Controller {
 	 */
 	function index() 
 	{
-		// no publish filter
-		$conds['no_publish_filter'] = 1;
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
+		$conds['no_publish_filte'] = 1;
 
 		// get rows count
 		$this->data['rows_count'] = $this->Subcategory->count_all_by( $conds );
 		// get categories
-		$this->data['subcategories'] = $this->Subcategory->get_all_by( $conds , $this->pag['per_page'], $this->uri->segment( 4 ) );
+		 $this->data['subcategories'] = $this->Subcategory->get_all_by( $conds , $this->pag['per_page'], $this->uri->segment( 4 ) );
 
 		// load index logic
 		parent::index();
@@ -43,6 +45,9 @@ class Subcategories extends BE_Controller {
 		// condition with search term
 		$conds = array( 'searchterm' => $this->searchterm_handler( $this->input->post( 'searchterm' )),
 						'cat_id' => $this->searchterm_handler( $this->input->post('cat_id')) );
+						$logged_in_user = $this->ps_auth->get_user_info();
+		
+						$conds['shop_id'] = $logged_in_user->shop_id;
 		
 		// pagination
 		$this->data['rows_count'] = $this->Subcategory->count_all_by( $conds );
@@ -108,6 +113,7 @@ class Subcategories extends BE_Controller {
 		}
 
 		// set timezone
+		$data['shop_id'] = $logged_in_user->shop_id;
 		$data['added_user_id'] = $logged_in_user->user_id;
 
 		if($id == "") {

@@ -20,6 +20,9 @@ class Products extends BE_Controller {
 	function index() {
 		
 		// no publish filter
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds['no_publish_filter'] = 1;
 
 		// get rows count
@@ -264,7 +267,9 @@ class Products extends BE_Controller {
 			$conds['order_by_type'] = "desc";
 		}
 
-
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		// pagination
 		$this->data['rows_count'] = $this->Product->count_all_by( $conds );
 
@@ -368,6 +373,10 @@ class Products extends BE_Controller {
 				$data['name'] = $this->get_data( 'name' );
 			}
 
+			
+		  $data['shop_id'] = $logged_in_user->shop_id;
+			
+
 			// prepare product description
 			if ( $this->has_data( 'description' )) {
 				$data['description'] = $this->get_data( 'description' );
@@ -448,6 +457,8 @@ class Products extends BE_Controller {
 			}
 			
 			// set timezone
+			
+			$data['shop_id'] = $logged_in_user->shop_id;
 			$data['added_user_id'] = $logged_in_user->user_id;
 
 			if($id == "") {
@@ -590,6 +601,9 @@ class Products extends BE_Controller {
 
 	function get_all_sub_categories( $cat_id )
     {
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
     	$conds['cat_id'] = $cat_id;
     	
     	$sub_categories = $this->Subcategory->get_all_by($conds);
@@ -951,6 +965,9 @@ function get_all_products_for_discount($discount_id='000')
 			  }
 
 			$prd_ids_from_dis_other = rtrim($result_others,",");
+			$logged_in_user = $this->ps_auth->get_user_info();
+		
+			$conds['shop_id'] = $logged_in_user->shop_id;
 
 			$conds['prd_ids_from_dis_other'] = $prd_ids_from_dis_other;
 
@@ -1014,6 +1031,9 @@ function get_all_products_for_discount($discount_id='000')
 			  }
 
 			  $prd_ids_from_dis_other = rtrim($result_others,",");
+			  $logged_in_user = $this->ps_auth->get_user_info();
+		
+			$conds['shop_id'] = $logged_in_user->shop_id;
 
 			  $conds['prd_ids_from_dis_other'] = $prd_ids_from_dis_other;
 

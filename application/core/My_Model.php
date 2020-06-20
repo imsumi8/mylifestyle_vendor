@@ -815,7 +815,8 @@ class PS_Model extends CI_Model {
   		$this->db->from('mk_categories');
   		$this->db->join('mk_touches', 'mk_categories.id = mk_touches.type_id');
   		$this->db->where('mk_touches.type_name','category');
-  		$this->db->where('mk_categories.status',1);
+		  $this->db->where('mk_categories.status',1);
+		  $this->db->where('mk_categories.shop_id',$conds['shop_id']);
   		
 
   		if ( isset( $conds['search_term'] ) || isset( $conds['date'] )) {
@@ -927,7 +928,8 @@ class PS_Model extends CI_Model {
   		$this->db->from('mk_categories');
   		$this->db->join('mk_touches', 'mk_categories.id = mk_touches.type_id');
   		$this->db->where('mk_touches.type_name','category');
-  		$this->db->where('mk_categories.status',1);
+		  $this->db->where('mk_categories.status',1);
+		  $this->db->where('mk_categories.shop_id',$conds['shop_id']);
 
 		if ( isset( $conds['search_term'] ) || isset( $conds['date'] )) {
 			$dates = $conds['date'];
@@ -1020,7 +1022,8 @@ class PS_Model extends CI_Model {
   		$this->db->from('mk_products');
   		$this->db->join('mk_touches', 'mk_products.id = mk_touches.type_id');
   		$this->db->where('mk_touches.type_name','product');
-  		$this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.shop_id',$conds['shop_id']);
 
   		if ( isset( $conds['cat_id'] )) {
 			if ($conds['cat_id'] != "" ) {
@@ -1116,7 +1119,8 @@ class PS_Model extends CI_Model {
   		$this->db->from('mk_products');
   		$this->db->join('mk_touches', 'mk_products.id = mk_touches.type_id');
   		$this->db->where('mk_touches.type_name','product');
-  		$this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.status',1);
+		  $this->db->where( 'mk_products.shop_id', $conds['shop_id'] );
 
   		if ( isset( $conds['cat_id'] )) {
 			if ($conds['cat_id'] != "" ) {
@@ -1243,6 +1247,7 @@ class PS_Model extends CI_Model {
 		$this->db->from('mk_categories');
 		$this->db->join('mk_transactions_counts', 'mk_categories.id = mk_transactions_counts.cat_id');
 		$this->db->where('mk_categories.status',1);
+		$this->db->where( 'mk_categories.shop_id', $conds['shop_id'] );
 
 
   		
@@ -1336,7 +1341,8 @@ class PS_Model extends CI_Model {
 			$this->db->select('mk_categories.*, count(mk_transactions_counts.cat_id) as t_count');    
 	  		$this->db->from('mk_categories');
 	  		$this->db->join('mk_transactions_counts', 'mk_categories.id = mk_transactions_counts.cat_id');
-	  		$this->db->where('mk_categories.status',1);
+			  $this->db->where('mk_categories.status',1);
+			  $this->db->where( 'mk_categories.shop_id', $conds['shop_id'] );
 
 			if ( isset( $conds['search_term'] ) || isset( $conds['date'] )) {
 				$dates = $conds['date'];
@@ -1440,7 +1446,8 @@ class PS_Model extends CI_Model {
 		$this->db->select('mk_products.*, count(mk_transactions_counts.product_id) as t_count');    
   		$this->db->from('mk_products');
   		$this->db->join('mk_transactions_counts', 'mk_products.id = mk_transactions_counts.product_id');
-  		$this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.status',1);
+		  $this->db->where( 'mk_products.shop_id', $conds['shop_id'] );
 
   		if ( isset( $conds['cat_id'] )) {
 			if ($conds['cat_id'] != "" ) {
@@ -1538,7 +1545,9 @@ class PS_Model extends CI_Model {
 		$this->db->select('mk_products.*, count(mk_transactions_counts.product_id) as t_count');    
   		$this->db->from('mk_products');
   		$this->db->join('mk_transactions_counts', 'mk_products.id = mk_transactions_counts.product_id');
-  		$this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.status',1);
+		  $this->db->where( 'mk_products.shop_id', $conds['shop_id'] );
+
 
   		if ( isset( $conds['cat_id'] )) {
 			if ($conds['cat_id'] != "" ) {
@@ -1697,7 +1706,7 @@ class PS_Model extends CI_Model {
 		$this->db->select(' count(trans_status_id) as s_count'); 
 		$this->db->from('mk_transactions_header');
 		$this->db->join('mk_transactions_status','mk_transactions_header.trans_status_id = mk_transactions_status.id');
-
+		$this->db->where( 'shop_id', $conds['shop_id'] );	
 		if(isset($conds['trans_status_id'])) {
 
 			if ($conds['trans_status_id'] != "" || $conds['trans_status_id'] != 0) {
@@ -1721,7 +1730,8 @@ class PS_Model extends CI_Model {
 		$this->db->select('mk_products.*, count(mk_transactions_counts.product_id) as t_count');    
   		$this->db->from('mk_products');
   		$this->db->join('mk_transactions_counts', 'mk_products.id = mk_transactions_counts.product_id');
-  		$this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.status',1);
+		  $this->db->where('mk_products.shop_id',$conds['shop_id']);
   		$this->db->limit(5);
   		$this->db->group_by('mk_transactions_counts.product_id');
   		$this->db->order_by("t_count", "DESC");
@@ -1731,13 +1741,34 @@ class PS_Model extends CI_Model {
 
 	/**
 	Returns purchased products count
+
+	
 	*/
+
+	
+	function get_transaction_count( $conds = array() )
+	{
+		
+		$this->db->select('count(mk_transactions_counts.product_id) as t_count');    
+  		$this->db->from('mk_transactions_counts');
+  		$this->db->join('mk_products', 'mk_products.id = mk_transactions_counts.product_id');
+		  $this->db->where('mk_products.shop_id',$conds['shop_id']);
+  	
+  		// $this->db->group_by('mk_transactions_counts.product_id');
+  		// $this->db->order_by("t_count", "DESC");
+		return $this->db->get()->row()->t_count;
+		 // print_r($this->db->last_query());die;
+	}
+
+
 	function get_transaction_by_month($conds = array())
 	{
 		//print_r("asdfasd" .$conds);die;
 		$this->db->select('mk_transactions_counts.*');    
-  		$this->db->from('mk_transactions_counts');
-  		$this->db->where('month(added_date)',$conds['added_date']);
+		  $this->db->from('mk_transactions_counts');
+		  $this->db->join('mk_products', 'mk_products.id = mk_transactions_counts.product_id');
+		  $this->db->where('mk_products.shop_id',$conds['shop_id']);
+  		$this->db->where('month(mk_transactions_counts.added_date)',$conds['added_date']);
 
 		return $this->db->get();
 		 // print_r($this->db->last_query());die;
@@ -1795,7 +1826,8 @@ class PS_Model extends CI_Model {
 	{
 	
 		$this->db->select('mk_products.*');    
-  		$this->db->from('mk_products');
+		  $this->db->from('mk_products');
+		  $this->db->where('shop_id',$conds['shop_id']);
   		$this->db->limit(3);
 
   		$this->db->order_by('added_date','DESC');
@@ -1815,12 +1847,12 @@ class PS_Model extends CI_Model {
 
 				//Both have filder values 
 				
-				$sql = "SELECT *  FROM mk_products WHERE id NOT IN(". $conds['prd_ids_from_dis_other'] .")  ORDER BY CASE WHEN id in (". $conds['prd_ids_from_dis'] .") then -1 else id end,id, is_discount asc";
+				$sql = "SELECT *  FROM mk_products WHERE id NOT IN(". $conds['prd_ids_from_dis_other'] .") AND shop_id='".$conds['shop_id']."' ORDER BY CASE WHEN id in (". $conds['prd_ids_from_dis'] .") then -1 else id end,id, is_discount asc";
 
 			} else {
 
 				//Disocunt not yet selected the product so no need ordering
-				$sql = "SELECT *  FROM mk_products WHERE id NOT IN(". $conds['prd_ids_from_dis_other'] .")";
+				$sql = "SELECT *  FROM mk_products WHERE id NOT IN(". $conds['prd_ids_from_dis_other'] .") and shop_id='" . $conds['shop_id'] . "'";
 
 
 			}
@@ -1832,11 +1864,11 @@ class PS_Model extends CI_Model {
 			if($conds['prd_ids_from_dis'] != "") {
 
 				//Products from other discount don't have but current have the products
-				$sql = "SELECT *  FROM mk_products ORDER BY CASE WHEN id in (". $conds['prd_ids_from_dis'] .") then -1 else id end,id, is_discount asc";
+				$sql = "SELECT *  FROM mk_products WHERE shop_id='" . $conds['shop_id'] . "' ORDER BY CASE WHEN id in (". $conds['prd_ids_from_dis'] .") then -1 else id end,id, is_discount asc";
 
 			} else {
 				//Disocunt not yet selected the product so no need ordering
-				$sql = "SELECT *  FROM mk_products ";
+				$sql = "SELECT *  FROM mk_products WHERE shop_id='" . $conds['shop_id'] . "' ";
 			}
 
 		}
@@ -1951,7 +1983,8 @@ class PS_Model extends CI_Model {
 	{
 	
 		$this->db->select('mk_transactions_header.*');    
-  		$this->db->from('mk_transactions_header');
+		  $this->db->from('mk_transactions_header');
+		  $this->db->where('shop_id',$conds['shop_id']);
   		$this->db->limit(4);
 
   		$this->db->order_by('added_date','DESC');

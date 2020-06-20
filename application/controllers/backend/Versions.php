@@ -18,23 +18,28 @@ class Versions extends BE_Controller {
 	 * Load About Entry Form
 	 */
 
-	function index( $id = "1" ) {
+	function index( ) {
+
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 
 		if ( $this->is_POST()) {
 		// if the method is post
 
 			// server side validation
 			if ( $this->is_valid_input()) {
-
+				$vid = $this->Version->get_one_by( $conds );
 				// save user info
-				$this->save( $id );
+				$this->save( $vid->id );
 			}
 		}
 
+	
 		$this->data['action_title'] = "Version";
 		
 		//Get About Object
-		$this->data['version'] = $this->Version->get_one( $id );
+		$this->data['version'] = $this->Version->get_one_by( $conds );
 
 		$this->load_form($this->data);
 
@@ -47,10 +52,15 @@ class Versions extends BE_Controller {
 
 
 		// load user
-		$this->data['version'] = $this->Version->get_one( $id );
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
+		$this->data['version'] = $this->Version->get_one_by( $conds );
+
+		// echo $this->data['version']->id;
 
 		// call the parent edit logic
-		parent::edit( $id );
+		parent::edit( $this->data['version']->id );
 	}
 
 	/**
@@ -99,8 +109,8 @@ class Versions extends BE_Controller {
 	    } else {
 	      $data['version_need_clear_data'] = 0;
 	    }
-		
-		
+	
+	
 		//save Tag
 		if ( ! $this->Version->save( $data, $id )) {
 		// if there is an error in inserting user data,	

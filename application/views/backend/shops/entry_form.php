@@ -512,9 +512,63 @@ echo form_open( '', $attributes);
           		</div>
                 
           		<div class="tab-pane <?php echo $active_tab_payment;?>" id="payment">
-           			<div class="form-group">
+        <div class="form-group">
 		
 						<br>
+
+						
+						<label><?php echo get_msg('razor_label')?></label>
+						
+						<br>
+
+						<label><?php echo get_msg('stripe_publishable_key')?>
+
+							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('stripe_publishable_key_tooltips')?>">
+								<span class='glyphicon glyphicon-info-sign menu-icon'>
+							</a>
+							
+							
+							
+						</label>
+						
+						<input class="form-control" type="text" placeholder="Publishable Key" name='razor_publishable_key' id='razor_publishable_key'
+							 value="<?php echo $shop->razor_publishable_key;?>">
+							 <br>
+						
+						
+						<label><?php echo get_msg('stripe_secret_key')?>
+					
+							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('stripe_secret_key_tooltips')?>">
+								<span class='glyphicon glyphicon-info-sign menu-icon'>
+							</a>
+							
+						</label>
+
+						<input class="form-control" type="text" placeholder="Secret Key" name='razor_secret_key' id='razor_secret_key'
+							 value="<?php echo $shop->razor_secret_key;?>">
+						<br>
+
+						<div class="form-group">
+							<div class="form-check">
+								<label>
+								
+								<?php echo form_checkbox( array(
+									'name' => 'razor_enabled',
+									'id' => 'razor_enabled',
+									'value' => 'accept',
+									'checked' => set_checkbox('razor_enabled', 1, ( @$shop->razor_enabled == 1 )? true: false ),
+									'class' => 'form-check-input'
+								));	?>
+
+								<?php echo get_msg( 'razor_enable_label' ); ?>
+
+								</label>
+							</div>
+						</div>
+
+						<br>
+<!-- 
+						<hr>
 
 						<label><?php echo get_msg('stripe_label')?></label>
 						
@@ -714,7 +768,7 @@ echo form_open( '', $attributes);
 							</div>
 						</div>
 
-						<br>
+						<br> -->
 
 						<hr>
 

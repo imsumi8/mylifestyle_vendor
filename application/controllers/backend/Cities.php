@@ -20,6 +20,9 @@ class Cities extends BE_Controller {
 	function index() 
 	{
 		// no publish filter
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$conds['no_publish_filter'] = 1;
 
 		// get rows count
@@ -45,6 +48,9 @@ class Cities extends BE_Controller {
 						'country_id' => $this->searchterm_handler( $this->input->post('country_id')) );
 		
 		// pagination
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 		$this->data['rows_count'] = $this->City->count_all_by( $conds );
 
 		// search data
@@ -107,7 +113,8 @@ class Cities extends BE_Controller {
 			$data['status'] = 0;
 		}
 
-		// set timezone
+	
+		$data['shop_id'] = $logged_in_user->shop_id;
 		$data['added_user_id'] = $logged_in_user->user_id;
 
 		if($id == "") {
