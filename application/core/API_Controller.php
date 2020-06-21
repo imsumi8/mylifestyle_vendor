@@ -1274,7 +1274,7 @@ class API_Controller extends REST_Controller
 		//print_r($zone_shipping_enable);die;
 
 		//Get Countries From Junction Table
-		$conds_zone['shop_id'] = $shop_id;
+		// $conds_zone['shop_id'] = $shop_id;
 		//print_r($conds_zone);die;
 
 		//Validation For Shop ID is required
