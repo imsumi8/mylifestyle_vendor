@@ -525,26 +525,28 @@ class Users extends API_Controller
 		// exit if there is an error in validation,
         if ( !$this->is_valid( $rules )) exit;
 
-        if ( !$this->User->exists( array( 'user_email' => $this->post( 'user_email' ), 'user_password' => $this->post( 'user_password' )))) {
+        if ( !$this->User->exists( array( 'user_email' => $this->post( 'user_email' ),'shop_id' => $this->post( 'shop_id' ), 'user_password' => $this->post( 'user_password' )))) {
         
             $this->error_response( get_msg( 'err_user_not_exist' ));
         }
-        	$email = $this->post( 'user_email' );
-	        $conds['user_email'] = $email;
+			$email = $this->post( 'user_email' );
+			$shop_id = $this->post( 'shop_id' );
+			$conds['user_email'] = $email;
+			$conds['shop_id'] = $shop_id;
 	        $is_banned = $this->User->get_one_by($conds)->is_banned;
 	        
 	        if ( $is_banned == '1' ) {
 	        	$this->error_response( get_msg( 'err_user_banned' ));
 	        } else {
 
-	        	$user_info = $this->User->get_one_by( array( "user_email" => $this->post( 'user_email' )));
+	        	$user_info = $this->User->get_one_by( array( "user_email" => $this->post( 'user_email' ),'shop_id' => $this->post( 'shop_id' )));
 		        $user_id = $user_info->user_id;
 		        $data = array(
 					
 					'device_token' => $this->post('device_token')
 				);
 				$this->User->save($data,$user_id);
-		        $this->custom_response($this->User->get_one_by(array("user_email" => $this->post('user_email'))));
+		        $this->custom_response($this->User->get_one_by(array("user_email" => $this->post('user_email'), 'shop_id' => $this->post( 'shop_id' ))));
 
 	        }
         
