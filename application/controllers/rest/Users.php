@@ -40,7 +40,7 @@ class Users extends API_Controller
 	        ),
 	        array(
 	        	'field' => 'user_email',
-	        	'rules' => 'required|valid_email|callback_email_check'
+	        	'rules' => 'required|valid_email|callback_email_shopcheck'
 	        ),
 	        array(
 	        	'field' => 'user_password',
@@ -55,7 +55,8 @@ class Users extends API_Controller
 
         $user_data = array(
         	"user_name" => $this->post('user_name'), 
-        	"user_email" => $this->post('user_email'), 
+			"user_email" => $this->post('user_email'), 
+			"shop_id" => $this->post('shop_id'), 
         	'user_password' => md5($this->post('user_password')),
         	"device_token" => $this->post('device_token'),
         	"code" =>  $code,
@@ -63,7 +64,8 @@ class Users extends API_Controller
         	"status" => 2 //Need to verified status
         );
 
-        $conds['user_email'] = $user_data['user_email'];
+		$conds['user_email'] = $user_data['user_email'];
+		$conds['shop_id'] = $user_data['shop_id'];
         $conds['status'] = 2;
        	$user_infos = $this->User->user_exists($conds)->result();
        	if (empty($user_infos)) {
@@ -504,6 +506,21 @@ class Users extends API_Controller
         return true;
     }
 
+
+	function email_shopcheck( $email,$shop_id)
+    {
+
+		$shop_id= $this->post('shop_id');
+
+        if ( $this->User->exists( array( 'user_email' => $email,'shop_id'=> $shop_id))) {
+        
+            $this->form_validation->set_message('email_shopcheck', 'Sorry, your email is already verified.');
+            return false;
+
+        } 
+
+        return true;
+    }
     /**
 	 * Users Login
 	 */
@@ -525,26 +542,28 @@ class Users extends API_Controller
 		// exit if there is an error in validation,
         if ( !$this->is_valid( $rules )) exit;
 
-        if ( !$this->User->exists( array( 'user_email' => $this->post( 'user_email' ), 'user_password' => $this->post( 'user_password' )))) {
+        if ( !$this->User->exists( array( 'user_email' => $this->post( 'user_email' ),'shop_id' => $this->post( 'shop_id' ), 'user_password' => $this->post( 'user_password' )))) {
         
             $this->error_response( get_msg( 'err_user_not_exist' ));
         }
-        	$email = $this->post( 'user_email' );
-	        $conds['user_email'] = $email;
+			$email = $this->post( 'user_email' );
+			$shop_id = $this->post( 'shop_id' );
+			$conds['user_email'] = $email;
+			$conds['shop_id'] = $shop_id;
 	        $is_banned = $this->User->get_one_by($conds)->is_banned;
 	        
 	        if ( $is_banned == '1' ) {
 	        	$this->error_response( get_msg( 'err_user_banned' ));
 	        } else {
 
-	        	$user_info = $this->User->get_one_by( array( "user_email" => $this->post( 'user_email' )));
+	        	$user_info = $this->User->get_one_by( array( "user_email" => $this->post( 'user_email' ),'shop_id' => $this->post( 'shop_id' )));
 		        $user_id = $user_info->user_id;
 		        $data = array(
 					
 					'device_token' => $this->post('device_token')
 				);
 				$this->User->save($data,$user_id);
-		        $this->custom_response($this->User->get_one_by(array("user_email" => $this->post('user_email'))));
+		        $this->custom_response($this->User->get_one_by(array("user_email" => $this->post('user_email'), 'shop_id' => $this->post( 'shop_id' ))));
 
 	        }
         
