@@ -306,7 +306,15 @@ class Transactionheaders extends API_Controller
 
 				$cod_result = 1;
 
-			} else if ($this->post( 'is_bank' ) == 1) {
+			} else if($this->post( 'is_razor' ) == 1) {
+
+				//User Using COD 
+				$payment_method = "RAZORPAY";
+
+
+				$razor_result = 1;
+
+			}  else if ($this->post( 'is_bank' ) == 1) {
 
 				//User Using COD 
 				$payment_method = "BANK";
@@ -322,7 +330,7 @@ class Transactionheaders extends API_Controller
 
 			
 
-			if( $paypal_result == 1 || $stripe_result == 1 || $cod_result == 1 || $bank_result == 1) {
+			if( $paypal_result == 1 || $stripe_result == 1 || $cod_result == 1 || $bank_result == 1|| $razor_result == 1) {
 
 				//echo $payment_method; die;
 
@@ -394,7 +402,8 @@ class Transactionheaders extends API_Controller
 
 		 		//Need to save inside transaction header table 
 				$trans_header = array(
-		 			'user_id' 				=> $this->post( 'user_id' ),
+					 'user_id' 				=> $this->post( 'user_id' ),
+					 'shop_id' 				=> $this->post( 'shop_id' ),
 		 			'sub_total_amount' 		=> $this->post( 'sub_total_amount' ),
 		 			'tax_amount' 			=> $this->post( 'tax_amount' ),
 		 			'shipping_amount' 		=> $this->post( 'shipping_amount' ),
