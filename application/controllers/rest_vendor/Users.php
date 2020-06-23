@@ -884,12 +884,14 @@ class Users extends API_Controller
         if ( !$this->User->exists( 
         	//new
         	array( 
-        		'phone_id' => $this->post( 'phone_id' ) 
+				'phone_id' => $this->post( 'phone_id' ), 
+				'shop_id' => $this->post( 'shop_id' ),
         		))) {
         
            
 
 			$user_data = array(
+				"shop_id" 	=> $this->post('shop_id'), 
 	        	"user_name" 	=> $this->post('user_name'), 
 	        	'user_phone'    => $this->post('user_phone'), 
 	        	"phone_id" 	   => $this->post('phone_id'),
