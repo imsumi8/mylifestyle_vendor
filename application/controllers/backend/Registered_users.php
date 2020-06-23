@@ -21,8 +21,9 @@ class Registered_users extends BE_Controller {
 		//registered users filter
 		$logged_in_user = $this->ps_auth->get_user_info();
 		
-		$conds['shop_id'] = $logged_in_user->shop_id;
+	
 		$conds = array( 'register_role_id' => 4 );
+		$conds['shop_id'] = $logged_in_user->shop_id;
 
 		// get rows count
 		$this->data['rows_count'] = $this->User->count_all_by($conds);
