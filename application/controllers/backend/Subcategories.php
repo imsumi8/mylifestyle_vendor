@@ -262,6 +262,9 @@ class Subcategories extends BE_Controller {
 	function is_valid_name( $name, $id = 0 )
 	{		
 		$conds['name'] = $name;
+		$logged_in_user = $this->ps_auth->get_user_info();
+		
+		$conds['shop_id'] = $logged_in_user->shop_id;
 
 			if ( strtolower( $this->Subcategory->get_one( $id )->name ) == strtolower( $name )) {
 			// if the name is existing name for that user id,

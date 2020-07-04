@@ -70,7 +70,9 @@
 		  <table class="table table-striped">
 		    <thead>
 			    <tr>
+				<th><?php echo "Product Code" ?></th>
 			      	<th><?php echo get_msg('Prd_name'); ?></th>
+					  <th><?php echo "Image" ?></th>
 					<th><?php echo get_msg('Prd_price'); ?></th>
 					<!-- <th><?php echo get_msg('Prd_dis_price'); ?></th> -->
 					<th><?php echo get_msg('Prd_qty'); ?></th>
@@ -87,6 +89,7 @@
 
 				?>
 				<tr>
+				<td><?php echo $this->Product->get_one($transaction_detail->product_id)->code ?></td>
 					<td>
 						<?php 
 
@@ -145,6 +148,13 @@
 						<?php echo "Product Unit : " . $transaction_detail->product_measurement . " " . $transaction_detail->product_unit; ?> <br>
 						<?php echo "Shipping Cost : " . $transaction_detail->shipping_cost ." ". $transaction->currency_symbol; ?>
 
+
+					</td>
+					<td>
+					<div class="product-img">
+				        	<?php $default_photo = get_default_photo( $transaction_detail->product_id, 'product' ); ?>
+				          	<img src="<?php echo img_url( '/thumbnail/'. $default_photo->img_path ); ?>" alt="Product Image" class="img-size-50">
+				        </div>
 
 					</td>
 					<td><?php echo $transaction_detail->original_price ." ". $transaction->currency_symbol; ?></td>

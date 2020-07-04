@@ -8,7 +8,7 @@
 				name:{
 					blankCheck : "",
 					minlength: 3,
-					remote: "<?php echo $module_site_url .'/ajx_exists/'.@$product->id; ?>"
+
 				},
 				cat_id: {
 		       		indexCheck : ""
@@ -21,7 +21,7 @@
 				name:{
 					blankCheck : "<?php echo get_msg( 'err_Prd_name' ) ;?>",
 					minlength: "<?php echo get_msg( 'err_Prd_len' ) ;?>",
-					remote: "<?php echo get_msg( 'err_Prd_exist' ) ;?>."
+					
 				},
 				cat_id:{
 			       indexCheck: "<?php echo $this->lang->line('f_item_cat_required'); ?>"
