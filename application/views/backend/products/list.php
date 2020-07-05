@@ -55,7 +55,7 @@
 				<td>
 					<div class="product-img">
 				        	<?php $default_photo = get_default_photo( $product->id, 'product' ); ?>
-				          	<img src="<?php echo img_url( '/thumbnail/'. $default_photo->img_path ); ?>" alt="Product Image" class="img-size-50">
+				          	<img src="<?php echo img_url( '/thumbnail/'. $default_photo->img_path ); ?>" alt="Product Image">
 				        </div>
 
 					</td>
