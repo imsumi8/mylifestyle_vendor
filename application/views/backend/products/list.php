@@ -11,6 +11,7 @@
 		<tr>
 			<th><?php echo get_msg('no'); ?></th>
 			<th><?php echo get_msg('product_name'); ?></th>
+			<th><?php echo "Image" ?></th>
 			<th><?php echo get_msg('cat_name'); ?></th>
 			<th><?php echo get_msg('subcat_name'); ?></th>
 			<th><?php echo get_msg('unit_price') . '('. $currency_symbol . ')'; ?></th>
@@ -50,6 +51,14 @@
 				<?php } else { ?>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product->name;?></td>
 				<?php } ?>
+
+				<td>
+					<div class="product-img">
+				        	<?php $default_photo = get_default_photo( $product->id, 'product' ); ?>
+				          	<img src="<?php echo img_url( '/thumbnail/'. $default_photo->img_path ); ?>" alt="Product Image" >
+				        </div>
+
+					</td>
 				<td><?php echo $this->Category->get_one( $product->cat_id )->name; ?></td>
 				<td><?php echo $this->Subcategory->get_one( $product->sub_cat_id )->name; ?></td>
 				<td><?php  
