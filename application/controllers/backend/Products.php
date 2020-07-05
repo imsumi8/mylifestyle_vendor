@@ -697,15 +697,19 @@ class Products extends BE_Controller {
 	function is_valid_name( $name, $id = 0 )
 	{		
 		 $conds['name'] = $name;
+		 $logged_in_user = $this->ps_auth->get_user_info();
+		
+		 $conds['shop_id'] = $logged_in_user->shop_id;
 
 			if ( strtolower( $this->Product->get_one( $id )->name ) == rtrim(strtolower( $name ))) {
 			// if the name is existing name for that user id,
 				return true;
-			} else if ( $this->Product->exists( ($conds ))) {
-			// if the name is existed in the system,
-				$this->form_validation->set_message('is_valid_name', get_msg( 'err_dup_name' ));
-				return false;
 			}
+			//  else if ( $this->Product->exists( ($conds ))) {
+			// // if the name is existed in the system,
+			// 	$this->form_validation->set_message('is_valid_name', get_msg( 'err_dup_name' ));
+			// 	return false;
+			// }
 			return true;
 	}
 
